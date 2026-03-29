@@ -640,6 +640,31 @@ function toggleMusic(){
   if(playing){audio.pause();document.getElementById('music-icon').textContent='🎵';playing=false;}
   else{audio.play().catch(()=>{});document.getElementById('music-icon').textContent='🔇';playing=true;}
 }
+// ── AUTO SCROLL ──
+let autoScrollSpeed = 2;
+let autoScrollInterval;
+
+function startAutoScroll() {
+  autoScrollInterval = setInterval(() => {
+    window.scrollBy(0, autoScrollSpeed);
+
+    if (window.innerHeight + window.scrollY >= document.body.scrollHeight) {
+      clearInterval(autoScrollInterval);
+    }
+  }, 16);
+}
+
+// start after page loads
+window.addEventListener('load', () => {
+  setTimeout(startAutoScroll, 2500);
+});
+
+// stop if user interacts
+['wheel','touchstart','keydown'].forEach(evt => {
+  window.addEventListener(evt, () => {
+    clearInterval(autoScrollInterval);
+  });
+});
 </script>
 </body>
 </html>
